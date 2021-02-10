@@ -18,7 +18,6 @@ class _InitialScreenState extends State<InitialScreen> {
           }
         ),
       ),
-      body:
     );
   }
 }
