@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/components/carousel.dart';
 
 class InitialScreen extends StatefulWidget {
   @override
@@ -18,6 +19,7 @@ class _InitialScreenState extends State<InitialScreen> {
           }
         ),
       ),
+      body: Carousel(),
     );
   }
 }
