@@ -15,32 +15,25 @@ class _InitialScreenState extends State<InitialScreen> {
   List<dynamic> restaurantCategories;
 
 
-
-    // Future getSlides() async {
-    //   String url = "https://sandbox.pedecome.pt/api/promo-slider";
-    //   Map<String, String> headers = {"Content-type": "application/json"};
-    //   try {
-    //     Response response = await post(url, headers: headers);
-    //     Map data = jsonDecode(response.body);
-    //     data['mainSlides'].forEach((slide) => slides.add(slide['image_placeholder']));
-    //   } catch (e) {
-    //     print(e);
-    //   }
-    // }
+    Future getSlides() async {
+      String url = "https://sandbox.pedecome.pt/api/promo-slider";
+      Map<String, String> headers = {"Content-type": "application/json"};
+      try {
+        Response response = await post(url, headers: headers);
+        Map data = jsonDecode(response.body);
+        data['mainSlides'].forEach((slide) => slides.add(slide['image_placeholder']));
+      } catch (e) {
+        print(e);
+      }
+    }
 
     Future getRestaurantCategories() async {
       String url = 'https://sandbox.pedecome.pt/api/get-restaurant-categories';
       Map<String, String> headers = {"Content-type": "application/json"};
-
       try {
         Response response = await post(url, headers: headers);
         List<dynamic> data = jsonDecode(response.body);
-
         setState(() => restaurantCategories = data);
-
-        print(restaurantCategories);
-
-
       } catch (e) {
         print(e);
       }
@@ -49,17 +42,17 @@ class _InitialScreenState extends State<InitialScreen> {
 
 @override
   // ignore: must_call_super
-  void initState() {
-    // getSlides();
-    getRestaurantCategories();
+  void initState()  {
+     getSlides();
+     getRestaurantCategories();
   }
-
 
   @override
   Widget build(BuildContext context) {
+      Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        elevation: 1,
+        elevation: 0,
         backgroundColor: Colors.white,
         leading: Builder(
           builder: (BuildContext context) {
@@ -67,7 +60,20 @@ class _InitialScreenState extends State<InitialScreen> {
           }
         ),
       ),
-      body: Carousel(),
+      body: Column(
+        children: [
+          Carousel(slides: slides),
+          Container(
+            width: size.width - 5,
+            height: size.width / 4,
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.circular(5),
+            ),
+          ),
+
+        ],
+      ),
     );
   }
 }
